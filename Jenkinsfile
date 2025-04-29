@@ -48,7 +48,9 @@ pipeline {                                    // 1  // Defines the start of the 
             steps {                           // 15  // Defines the steps that will be executed in this stage
                 script {                      // 16  // Allows running custom Groovy script inside the pipeline
                     echo '<--------------- Jar Publish Started --------------->'  
-                                              // Logs a message indicating the start of JAR publishing
+                    
+                          // Logs a message indicating the start of JAR publishing
+                    def registry = "https://trials1ul3b.jfrog.io/"
                     def server = Artifactory.newServer url: registry + "/artifactory", credentialsId: "arti-cred"  
                                               // Defines the Artifactory server with the specified URL and credentials
                     def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"  
@@ -61,7 +63,7 @@ pipeline {                                    // 1  // Defines the start of the 
                               "flat": "false",
                               "props": "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
-                            }
+i                            }
                          ]
                      }"""  
                                               // Defines the upload specification for uploading JAR files to Artifactory
