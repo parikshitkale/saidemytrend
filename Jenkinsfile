@@ -44,13 +44,11 @@ pipeline {                                    // 1  // Defines the start of the 
                 }                             // Ends the withSonarQubeEnv block
             }                                 // 10  // Ends the steps block for 'SonarQube analysis' stage
         }                                     // 8  // Ends the 'SonarQube analysis' stage
-        stage("Jar Publish") {                // 14  // Creates a stage named 'Jar Publish'
+                stage("Jar Publish") {                // 14  // Creates a stage named 'Jar Publish'
             steps {                           // 15  // Defines the steps that will be executed in this stage
                 script {                      // 16  // Allows running custom Groovy script inside the pipeline
                     echo '<--------------- Jar Publish Started --------------->'  
-                    
-                          // Logs a message indicating the start of JAR publishing
-                    def registry = "https://trials1ul3b.jfrog.io/"
+                                              // Logs a message indicating the start of JAR publishing
                     def server = Artifactory.newServer url: registry + "/artifactory", credentialsId: "arti-cred"  
                                               // Defines the Artifactory server with the specified URL and credentials
                     def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"  
@@ -63,7 +61,7 @@ pipeline {                                    // 1  // Defines the start of the 
                               "flat": "false",
                               "props": "${properties}",
                               "exclusions": [ "*.sha1", "*.md5"]
-i                            }
+                            }
                          ]
                      }"""  
                                               // Defines the upload specification for uploading JAR files to Artifactory
@@ -77,8 +75,7 @@ i                            }
                                               // Logs a message indicating the end of JAR publishing
                 }                             // 16  // Ends the script block for 'Jar Publish' stage
             }                                 // 15  // Ends the steps block for 'Jar Publish' stage
-        } 
-                                            // 11  // Ends the 'Quality Gate' stage
+        }                            // Defines the upload specification for up                                            // 11  // Ends the 'Quality Gate' stage
     }                                         // 3  // Ends the stages block
 }                                             // 1  // Ends the pipeline block
 
